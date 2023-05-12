@@ -18,10 +18,29 @@ const diyOnicConverter = (textContentContainerSelector) => {
     console.log('continue working ');
     //loop through each tag
     tags.forEach((val, ind) => {
-      //grab the inner text of the tag
-      const innerText = val.innerText;
-      console.log(innerText);
+      // so silly not the text, i need the html to convert
+      const innerHtml = val.innerHTML;
+      console.log(val.innerHTML);
+      // trim the html and split into sentences
+      const sentences = innerHtml.trim().split('&nbsp;');
+      console.log(sentences);
+      // grab the inner text of the tag
+      // const innerText = val.innerText;
+      // console.log(innerText);
+      // // split the text on spaces so we get words
+      // const words = innerText.split(' ');
+      // console.log(words);
+      // // for each word check length, if greater than X split and add <strong> tag around
+      // words.forEach((word, ind) => {
+      //   console.log(word);
+      //   if (word.length > 2) {
+      //     console.log('word greater than 3', word);
+      //   } else {
+      //     word.replace(word, `<strong>${word}</strong>`);
+      //   }
+      // });
     });
+    console.log(tags);
   } else {
     console.log('sorry there are no valid tags to convert');
     return;
