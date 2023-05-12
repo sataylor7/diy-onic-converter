@@ -21,52 +21,48 @@ const diyOnicConverter = (textContentContainerSelector) => {
   if (tags.length > 0) {
     console.log('continue working ');
     //loop through each tag => not performant as there are 3n loops => just solving first
-    const updatedTags = tags
-      .map((val, ind) => {
-        // so silly not the text, i need the html to convert
-        const innerHtml = val.innerHTML;
-        console.log(val.innerHTML);
-        // trim the html and split into sentences
-        const sentences = innerHtml.trim().split(/\r?\n/);
-        console.log(sentences);
-        // split sentences into words
-        const updatedSentences = sentences
-          .map((sentence, ind) => {
-            // not ideal as there may be some cases where there are breaks taht we dont want split
-            const words = sentence.trim().split(/\r?\n/);
-            console.log(words);
-            return words.map((word, ind) => {
-              console.log('this is the word inside the words array');
-              // check if the word as a tag, or space => we have to split the space so that we can bold each sub word
-              if (htmlRegex.test(word)) {
-                console.log('this word contains html tag');
-              } else if (word.indexOf(' ') >= 0) {
-                console.log('this "word" has a space');
-              } else {
-                console.log('word length', word.length);
-                // the tag we need to get the inner html of the tag
-                if (word.length > 3) {
-                  console.log('word greater than 3', word);
-                  const firstThree = word.substr(0, 3);
-                  const restOfWord = word.substr(4, word.length);
-                  console.log(firstThree);
-                  console.log(restOfWord);
-                } else {
-                  word = word.replace(word, `<strong>${word}</strong>`);
-                }
-              }
-              console.log(
-                'this is the word inside the words array updated',
-                word
-              );
-              return word;
-            });
-          })
-          .join('\n');
-        console.log('sentences', updatedSentences);
-        return updatedSentences;
-      })
-      .join('\n');
+    const updatedTags = tags.map((val, ind) => {
+      // so silly not the text, i need the html to convert
+      const innerHtml = val.innerHTML;
+      console.log(val.innerHTML);
+      // trim the html and split into sentences
+      const sentences = innerHtml.trim().split(/\r?\n/);
+      console.log(sentences);
+      // split sentences into words
+      const updatedSentences = sentences
+        .map((sentence, ind) => {
+          // not ideal as there may be some cases where there are breaks taht we dont want split
+          const words = sentence.trim().split(/\r?\n/);
+          console.log(words);
+          return words.map((word, ind) => {
+            console.log('this is the word inside the words array');
+            // check if the word as a tag, or space => we have to split the space so that we can bold each sub word
+            if (htmlRegex.test(word)) {
+              console.log('this word contains html tag');
+            } else if (word.indexOf(' ') >= 0) {
+              console.log('this "word" has a space');
+            } else if (word.length > 3) {
+              // the tag we need to get the inner html of the tag
+              console.log('word greater than 3', word);
+              // this isn't escaping correctly...
+              // word = `<strong>${word.substr(0, 3)}</strong>${word.substr(
+              //   4,
+              //   word.length
+              // )}`;
+            } else {
+              word = word.replace(word, `<strong>${word}</strong>`);
+            }
+            console.log(
+              'this is the word inside the words array updated',
+              word
+            );
+            return word;
+          });
+        })
+        .join(' ');
+      console.log('sentences', updatedSentences);
+      return updatedSentences;
+    });
     // this will replace everything which we dont want
     container.innerHTML = updatedTags;
   } else {
