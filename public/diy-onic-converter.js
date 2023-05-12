@@ -38,6 +38,9 @@ const diyOnicConverter = (textContentContainerSelector) => {
             // check if the word as a tag, or space => we have to split the space so that we can bold each sub word
             if (htmlRegex.test(word)) {
               console.log('this word contains html tag');
+              // two things here 1. wed have check the words inside the tag, then perform the logic if it has spaces etc
+
+              // 2. there could be a tag and other words, so we should also check if the ending tag is the same as the length of the word
             } else if (word.indexOf(' ') >= 0) {
               console.log('this "word" has a space');
               // split on the space => this isnt really effecient as we are not in another loop... I know there is a better way just cant think of it
