@@ -5,6 +5,9 @@ const diyOnicConverter = (textContentContainerSelector) => {
   const container = document.querySelector(textContentContainerSelector);
   console.log('Performing bionic reading conversion on:', container);
 
+  // I looked this up, as I dont remember all the nuances of regex
+  const htmlRegex = /<[a-z]+\d?(\s+[\w-]+=("[^"]*"|'[^']*'))*\s*\/?>|&#?\w+;/i;
+
   /* Etc. etc. etc. your code etc. */
   // solve the problem, then refactor to make it better/more performant
   /**
@@ -29,6 +32,21 @@ const diyOnicConverter = (textContentContainerSelector) => {
         // not ideal as there may be some cases where there are breaks taht we dont want split
         const words = sentences.trim().split(/\r?\n/);
         console.log(words);
+        words.forEach((word, ind) => {
+          console.log('this is the word inside the words array');
+          // check if the word as a tag, or space => we have to split the space so that we can bold each sub word
+          if (htmlRegex.test(word)) {
+            console.log('this word contains html tag');
+          } else if (word.indexOf(' ') >= 0) {
+            console.log('this "word" has a space');
+          }
+          // the tag we need to get the inner html of the tag
+          // if (word.length > 2) {
+          //   console.log('word greater than 3', word);
+          // } else {
+          //   word.replace(word, `<strong>${word}</strong>`);
+          // }
+        });
       });
       // grab the inner text of the tag
       // const innerText = val.innerText;
