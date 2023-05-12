@@ -6,6 +6,7 @@ const diyOnicConverter = (textContentContainerSelector) => {
   console.log('Performing bionic reading conversion on:', container);
 
   /* Etc. etc. etc. your code etc. */
+  // solve the problem, then refactor to make it better/more performant
   /**
    * The function should then convert the content of every p element within the elements matched by that selector so that every word is formatted in a style that is similar to bionic reading.
    */
@@ -15,6 +16,12 @@ const diyOnicConverter = (textContentContainerSelector) => {
   // if the length is greater than 0 then perform the actions
   if (tags.length > 0) {
     console.log('continue working ');
+    //loop through each tag
+    tags.forEach((val, ind) => {
+      //grab the inner text of the tag
+      const innerText = val.innerText;
+      console.log(innerText);
+    });
   } else {
     console.log('sorry there are no valid tags to convert');
     return;
