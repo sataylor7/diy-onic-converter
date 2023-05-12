@@ -43,6 +43,15 @@ const diyOnicConverter = (textContentContainerSelector) => {
               // split on the space => this isnt really effecient as we are not in another loop... I know there is a better way just cant think of it
               const splitWords = word.split(' ');
               console.log(splitWords);
+              // so no we start repeating ourselves, so we could pull things out and make it recursive if we are now checking > 3 = 3
+              return splitWords.map((split) => {
+                if (split.length > 3) {
+                  console.log('split word greater than 3', split);
+                } else {
+                  split = split.replace(split, `<strong>${split}</strong>`);
+                }
+                return split;
+              });
             } else if (word.length > 3) {
               // the tag we need to get the inner html of the tag
               console.log('word greater than 3', word);
