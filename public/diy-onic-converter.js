@@ -16,14 +16,20 @@ const diyOnicConverter = (textContentContainerSelector) => {
   // if the length is greater than 0 then perform the actions
   if (tags.length > 0) {
     console.log('continue working ');
-    //loop through each tag
+    //loop through each tag => not performant as there are 3n loops => just solving first
     tags.forEach((val, ind) => {
       // so silly not the text, i need the html to convert
       const innerHtml = val.innerHTML;
       console.log(val.innerHTML);
       // trim the html and split into sentences
-      const sentences = innerHtml.trim().split('&nbsp;');
+      const sentences = innerHtml.trim().split(/\r?\n/);
       console.log(sentences);
+      // split sentences into words
+      sentences.forEach((sentences, ind) => {
+        // not ideal as there may be some cases where there are breaks taht we dont want split
+        const words = sentences.trim().split(/\r?\n/);
+        console.log(words);
+      });
       // grab the inner text of the tag
       // const innerText = val.innerText;
       // console.log(innerText);
