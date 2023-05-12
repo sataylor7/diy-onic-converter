@@ -16,7 +16,6 @@ const diyOnicConverter = (textContentContainerSelector) => {
   // check for existence of p in this case in the container *ideally this shouldnt be hard coded
   // will return a node list will need to convert to an array => this may have actually been updated so that nodelist has forEach
   const tags = [].slice.call(container.querySelectorAll('p'));
-  //const tags = container.querySelectorAll('p');
   // if the length is greater than 0 then perform the actions
   if (tags.length > 0) {
     console.log('continue working ');
@@ -41,6 +40,9 @@ const diyOnicConverter = (textContentContainerSelector) => {
               console.log('this word contains html tag');
             } else if (word.indexOf(' ') >= 0) {
               console.log('this "word" has a space');
+              // split on the space => this isnt really effecient as we are not in another loop... I know there is a better way just cant think of it
+              const splitWords = word.split(' ');
+              console.log(splitWords);
             } else if (word.length > 3) {
               // the tag we need to get the inner html of the tag
               console.log('word greater than 3', word);
@@ -63,7 +65,7 @@ const diyOnicConverter = (textContentContainerSelector) => {
       console.log('sentences', updatedSentences);
       return updatedSentences;
     });
-    // this will replace everything which we dont want
+    // this will replace everything which we dont want, still solving
     container.innerHTML = updatedTags;
   } else {
     console.log('sorry there are no valid tags to convert');
