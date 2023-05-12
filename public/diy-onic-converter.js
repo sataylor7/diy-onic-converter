@@ -16,11 +16,12 @@ const diyOnicConverter = (textContentContainerSelector) => {
   // check for existence of p in this case in the container *ideally this shouldnt be hard coded
   // will return a node list will need to convert to an array => this may have actually been updated so that nodelist has forEach
   const tags = [].slice.call(container.querySelectorAll('p'));
+  //const tags = container.querySelectorAll('p');
   // if the length is greater than 0 then perform the actions
   if (tags.length > 0) {
     console.log('continue working ');
     //loop through each tag => not performant as there are 3n loops => just solving first
-    tags.forEach((val, ind) => {
+    const updatedTags = tags.map((val, ind) => {
       // so silly not the text, i need the html to convert
       const innerHtml = val.innerHTML;
       console.log(val.innerHTML);
@@ -28,41 +29,32 @@ const diyOnicConverter = (textContentContainerSelector) => {
       const sentences = innerHtml.trim().split(/\r?\n/);
       console.log(sentences);
       // split sentences into words
-      sentences.forEach((sentences, ind) => {
+      const updatedSentences = sentences.map((sentence, ind) => {
         // not ideal as there may be some cases where there are breaks taht we dont want split
-        const words = sentences.trim().split(/\r?\n/);
+        const words = sentence.trim().split(/\r?\n/);
         console.log(words);
-        words.forEach((word, ind) => {
+        return words.map((word, ind) => {
           console.log('this is the word inside the words array');
           // check if the word as a tag, or space => we have to split the space so that we can bold each sub word
           if (htmlRegex.test(word)) {
             console.log('this word contains html tag');
           } else if (word.indexOf(' ') >= 0) {
             console.log('this "word" has a space');
+          } else {
+            console.log('word length', word.length);
+            // the tag we need to get the inner html of the tag
+            if (word.length > 3) {
+              console.log('word greater than 3', word);
+            } else {
+              word = word.replace(word, `<strong>${word}</strong>`);
+            }
           }
-          // the tag we need to get the inner html of the tag
-          // if (word.length > 2) {
-          //   console.log('word greater than 3', word);
-          // } else {
-          //   word.replace(word, `<strong>${word}</strong>`);
-          // }
+          console.log('this is the word inside the words array updated', word);
+          return word;
         });
       });
-      // grab the inner text of the tag
-      // const innerText = val.innerText;
-      // console.log(innerText);
-      // // split the text on spaces so we get words
-      // const words = innerText.split(' ');
-      // console.log(words);
-      // // for each word check length, if greater than X split and add <strong> tag around
-      // words.forEach((word, ind) => {
-      //   console.log(word);
-      //   if (word.length > 2) {
-      //     console.log('word greater than 3', word);
-      //   } else {
-      //     word.replace(word, `<strong>${word}</strong>`);
-      //   }
-      // });
+      console.log('sentences', updatedSentences);
+      return updatedSentences;
     });
     console.log(tags);
   } else {
